@@ -1,7 +1,5 @@
 package com.zzxx.shoot;
 
-import com.zzxx.Award;
-
 /*
 小蜜蜂类
  */

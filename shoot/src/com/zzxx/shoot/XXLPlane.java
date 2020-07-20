@@ -1,7 +1,5 @@
 package com.zzxx.shoot;
 
-import com.zzxx.Award;
-
 import java.awt.image.BufferedImage;
 
 public class XXLPlane extends FlyingObject implements Enemy, Award {

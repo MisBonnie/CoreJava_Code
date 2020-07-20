@@ -1,4 +1,4 @@
-package com.zzxx;
+package com.zzxx.shoot;
 
 /*
 奖励类型: 实现类 - 小蜜蜂\大敌机\...

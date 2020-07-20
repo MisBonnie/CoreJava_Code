@@ -1,7 +1,5 @@
 package com.zzxx.shoot;
 
-import com.zzxx.Award;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

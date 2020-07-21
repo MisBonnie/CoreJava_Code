@@ -1,0 +1,77 @@
+JavaSE: API - 应用程序接口, 常用类, 方法
+
+String, ArrayList -> [xx, xx] ...
+
+1.Object类, 所有类的父类
+    方法: 11个
+    Class getClass(): 通过对象的该方法,可以获得对象对应的类的字节码对象
+        "haha".getClass() -> String的字节码对象
+        "hi".getClass() -> String的字节码对象
+    Object clone(): 克隆, 复制
+        复制一份全新的, 属性内容一致的对象, 深克隆
+        复制的是引用 -> 浅克隆
+        调用方法的对象, 需要类实现Cloneable接口
+    wait() * 3
+    notify() / notifyAll() -- 以上5个和线程有关
+    void finalize()
+        GC: 垃圾回收机制, 定时清理内存中
+            栈:方法结束, 方法栈直接释放
+            堆:无效对象, 等待gc回收
+        手动调用: System.gc()
+
+    String toString(): 将对象变成字符串格式
+        直接打印对象时, 自动就会调用对象的toString方法
+        System.out.println(zi.toString()); // 简化写法
+        System.out.println(zi); // 简化写法
+        Object中默认toString的实现方式:
+          getClass().getName() + "@" + Integer.toHexString(hashCode());
+        自定义打印格式: 重写toString方法
+
+    public native int hashCode(); -- 获得的是地址, 哈希码
+
+    boolean equals(Object o)
+        Object中默认equals的实现方式:
+            return (this == obj); -- 比较对象的地址
+        当我们想要比较两个相同类型对象的属性值时, 需要重写equals
+
+    Objects.equals(name, ziEquals.name);
+
+2.java.util.Date: 日期, 时间
+    构造方法:
+      new Date()
+      new Date(long time)
+    常用API:
+      void setTime(long time) -> 将date设置为对应毫秒值表示的时间
+      long getTime() -> 获得date对应的毫秒值
+    Date中的 toString() 重写过了:
+      Tue Jul 21 11:48:57 CST 2020
+
+    时间计算: 计算long值
+    需求例如:入职时间已知, 入职十周年当月的第三周的周五
+            商品过期日前面2周的周三是促销日
+       单纯使用long计算,不可能完成
+    万年历  java.util.Calendar -> 复杂的时间推算
+       初始化: static Calendar getInstance();
+       常用API:
+           int get(分量字段) -> 获得字段对应的值
+           void set(分量字段, 值)
+           void add(分量字段, 值) -> 向前计算, 加负数
+
+    1.long: 简单时间计算, 7天之内
+            运行效率计算
+    2.Date: 展示时间
+            2020-07-21  16:47:55
+            2020/07/21  16:47:55
+            2020年07月21日  16:47:55
+    3.Calendar: 复杂计算
+
+    时间的展示: Date
+      自定义格式 java.text.DateFormat 子类 SimpleDateFormat
+
+
+复习:
+  类的加载: 将类的信息读取到方法区中,生成了一字节码对象Class
+           Student -> Student的字节码对象[包含了Student类中所有的信息]
+  Zi zi = new Zi(); -> zi = null;
+
+

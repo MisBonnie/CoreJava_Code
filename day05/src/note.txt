@@ -1,0 +1,186 @@
+回顾:
+  数组排序
+  面向对象:
+    类: class 类型 包含:成员变量.成员方法.构造方法
+    对象: 类的实例化个体
+  使用对象步骤:
+    1.定义类
+    2.创建对象  类型 变量名 = new 类型();
+    3.变量名.成员变量    变量名.成员方法()
+  对象成员变量初始化:
+    构造方法: 方法名和类名相同
+             没有返回值类型
+             没写构造方法, 默认添加无参构造方法
+    class Foo {
+        String name;
+        Foo(String name) {
+            this.name = name
+        }
+    }
+    this关键字: 当前对象
+        this(); --> 构造方法中占第一行
+        this.name; --> 调用成员变量
+        this.method1() --> 调用成员方法
+  方法的重载:
+    方法名一样
+    参数列表不同: 类型,个数,顺序
+  引用类型数组:
+    1.数组初始化: 只确定数组长度, 默认元素都是null
+        Foo[] arr = new Foo[3];
+    2.元素初始化
+        arr[0] = new Foo();
+    没有初始化, 就会出现 null.成员变量, 产生空指针异常
+        NullPointerException
+        ArrayIndexOutOfBoundsException
+类中:
+    成员变量 -> field
+    成员方法 -> method
+
+new Scanner(System.in)
+    nextLine()
+    next()
+    nextInt()
+    nextDouble()
+JDK中提供的类  API -> 应用程序接口,工具-类
+学习类:
+    就是学习 构造方法 -> 如何创建对象
+            成员变量 -> 基本可以忽略
+            成员方法 -> 功能
+接触过的类:
+    System: java.lang.System
+    Scanner: java.util.Scanner
+    Math: java.lang.Math
+    String: java.lang.String
+    Arrays: java.util.Arrays
+程序中,默认import的软件包就是 java.lang
+
+软件包package:
+    java.lang: 常用类
+    java.util: 工具类
+    java.io: 输入输出相关类
+    java.sql: 数据库相关
+    java.net: 网络相关
+    java.text: 格式化相关
+
+常用类[一]
+ 1.Random: 构造方法  new Random()
+     int nextInt(): 产生一个随机整数
+     int nextInt(int n): 产生一个0~n的随机数
+   比较Math.random() 和 Random 的使用
+     1.Math.random() -> 不需要对象,直接调用
+       Random -> 需要对象
+     2.Math.random() -> 返回double, 范围固定0~1
+       Random中的nextInt() -> 返回int, 范围可指定
+ 2.String - 字符串 -
+    字符数组直接打印, 就是字符串 -> JVM转换的
+    字符串特点:
+       1.直接赋值的字符串, 都存在字符串常量池中, 优化
+       2.字符串本身不可变
+       3.字符串不能用 == 来比较
+    1.构造方法
+        String s = "hello";
+        String()
+        String(String)
+        String(char[])
+        String(char[], int offset, int count)
+        String(byte[])
+        String(byte[], int offset, int length)
+    2.常用API
+        char charAt(int index)
+        char[] toCharArray()
+        boolean equals(String)
+        String substring(int start, int end)
+        String substring(int start)
+        boolean startsWith(String)
+        -- 从offset位置开始, 是否以指定字符串打头
+        boolean startsWith(String, int offset)
+        boolean endsWith(String)
+        int indexOf(char)
+        int indexOf(String)
+        -- 从fromIndex开始往后, 第一次出现char的位置
+        int indexOf(char, int fromIndex)
+        int indexOf(String, int fromIndex)
+        int length()
+
+        boolean equalsIgnoreCase(String)
+        -- 去掉字符串左右两边的空白字符
+        String trim()
+
+        concat
+        toUpperCase
+        toLowerCase
+        contains
+        replace
+ 3.Scanner
+    Scanner console = new Scanner(System.in);
+
+有一些类的方法在使用时, 不需要创建对象
+static: 静态的
+ 1.修饰成员变量
+    属于类的, 所有对象共用
+    通过类名.调用
+    只有一个
+
+ 2.修饰方法
+
+ 3.修饰代码块
+    静态代码块 -> 给类初始化
+    在类加载时执行的
+    作用: 用来执行消耗比较大的代码
+
+xx.java -> xx.class -> 类加载 -> JVM方法区中
+静态的成员变量是和类一起加载到方法区中的
+结论: 当使用静态成员变量时, 对象不一定存在
+
+类什么时候会加载?
+  第一次使用类会加载, 并且只加载一次
+  使用类的情况:
+    创建对象
+    调用类的静态成员变量
+    调用类的静态方法
+  类加载会执行什么代码?
+    1.静态代码块
+    2.静态成员变量
+
+java.lang.Math:
+    double Math.random(): 返回0.0~1.0 之间的随机数
+    double Math.pow(double a, double b): 返回 a 的 b 次幂
+java.util.Arrays:
+    String Arrays.toString(数组): 以[元素1, 元素2]格式打印数组
+    int[] Arrays.copyOf(int[] src, int newLength)
+    void sort(int[] arr): 按照升序排序, 只支持基本数据类型和String
+java.util.System:
+    static void arraycopy(int[] src, int srcPos, int[] dest, int destPos, int length)
+    long currentTimeMillis();
+
+
+数组 [1,2,3,4,5], 添加一个 6
+1.数组扩容: 创建新的数组
+    int[] arr = {1,2,3,4,5};
+    arr = new int[6]; // [1,2,3,4,5,0]
+2.将原来的元素复制到新数组中
+
+数组赋值:
+    void System.arraycopy(src, srcPos, dest, destPos, count)
+
+练习:
+  生成一套双色球号码
+  红球: 1~33 随机, 不能重复, 生成5个号
+       按照升序排序
+  蓝球: 1~16 随机, 1个 加到数组的最后
+
+  int[] red = new int[5];
+  扩容1位, 加蓝球
+
+  酒店管理系统 - 面向对象版本
+  酒店类:
+    房间[][] rooms
+    功能/方法:
+        in(房间号, 客户名) - 入住
+        out(房间号) - 退房
+        show() - 查房
+  房间类:
+    房间号\客户-null
+    构造方法(房间号)
+  客户类:
+    客户名

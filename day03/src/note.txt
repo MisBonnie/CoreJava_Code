@@ -1,0 +1,85 @@
+回顾:
+  顺序结构
+  条件分支:
+    if
+    if - else
+    if - else if - else if .... - else
+    switch(int\short\char\byte\String) - case - default
+        break
+  循环结构:
+    for(初始值; 循环条件; 步进方式){循环体}
+        有规律, 或者知道次数
+    while(循环条件) {循环体}
+    do{循环体} while(循环条件)
+        直到....
+        当... 没有规律, 或者不知道次数
+    终止循环: break
+    结束一次循环,继续下次循环: continue
+
+基本数据类型: byte\short\int\long\float\double\char\boolean
+数组array: 最基本的一种数据结构 - 数据的排列方式, 数组是第一种引用类型
+     可以存储多个变量的容器
+
+  初始化:  int[] arr = {元素};  -- 直接确定元素内容和长度
+          int[] arr = new int[] {元素} -- 直接确定元素内容和长度
+          int[] arr = new int[num] -- 确定长度, 内容默认值
+  数组属性: 长度
+     arr.length: 不可变
+  数组元素: 通过下标/索引 index
+     index范围: 0 ~ length-1
+     arr[index] 访问\赋值
+  数组遍历: for循环
+
+JVM内存空间:
+  方法区: 存储类相关的信息
+  栈: 临时变量, 局部变量
+  堆: 引用类型的真正数据, 对象
+
+类加载: 将字节码(class文件)中的类信息读取到JVM方法区中
+       由类加载器完成
+
+方法: 函数/过程, 包含了一些代码
+  主方法
+  语法/结构:
+     修饰词            方法返回值类型                    方法名       (参数列表)      {方法体}
+     public static    void/int/int[]/boolean/String   main/随意    int a, int b   一些代码
+  参数: 也叫临时变量, 类型 变量名
+       参数列表可以为空, 也可以多个, 多个参数之间用','隔开
+
+  有返回值的方法, 需要通过return返回结果
+  return表示方法结束, 没有返回值的方法, 也可以使用return
+
+案例: 猜字母游戏
+  随机生成5个字母    afhci
+  猜字母            abcde
+  提示: 2个字母正确, 其中位置正确的有1个
+
+常用方法:
+  Scanner
+    int nextInt(): 获取控制台内容, 并且转换成int值返回
+    double nextDouble(): 获取控制台内容,并且转换成double返回
+    String next(): 获取控制台字符串, 并返回(遇到回车或者空格读取结束)
+    String nextLine(): 获取控制台一整行字符串,并返回(遇到回车结束)
+  System
+    void print(内容) -> 打印, 不换行
+    void println(空/内容) -> 打印完, 换行
+  Math
+    double random(): 返回一个[0,1)随机数
+    double pow(double d1, double d2): 返回 d1 的 d2 次幂
+  转义字符: \n:回车  \r:换行  \t:制表符  \\:\本身
+  String:
+    char charAt(int index): 返回index索引位置对应的字符
+  Arrays:
+    String toString(数组): 将数组变成字符串格式返回
+
+
+命名规则：
+	1.只能出现：英文 + 数字 + _ + $
+	2.不能以数字开头
+	3.变量名：可读性好、首字母小写、第二个单词开始首字母大写
+	4.包名：全部小写，域名倒写
+		www.baidu.com
+		com.baidu.zhidao.xx.xx
+		com.baidu.baike.xx.xx
+    5.方法名: 首字母小写、第二个单词开始首字母大写 - 驼峰命名法
+             长度不限, 但是一定要可读性好

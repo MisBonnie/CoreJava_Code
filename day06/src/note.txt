@@ -1,0 +1,146 @@
+回顾:
+  常用API
+  Scanner
+    int nextInt()
+    String next()
+  String
+    通过xx来构造对象: String char[] byte[]
+    int length()
+    int indexOf(char/String[, index])
+    boolean equals(String)
+    String substring(int start[, int end])
+  System
+    static long currentTimeMills()
+    static void arraycopy(src, int srcPos, dest, destPos, length)
+  Arrays
+    static String toString(array)
+    static void sort(array)
+    int[] copyOf(int[], int newLength)
+
+面向对象:
+ 类: 成员变量\成员方法\静态方法\静态成员变量\构造方法\静态代码块\代码块
+
+ 成员变量\成员方法 在使用之前必须要创建对象
+ 静态方法\静态成员变量 可以直接通过类来调用
+
+ Math: java.lang
+    static double random(): 0.0~1.0
+    static double pow(double a, double b)
+    static int abs(int) : 求绝对值
+    double ceil(double) : 向上取整
+    double floor(double): 向下取整
+    double round(double): 四舍五入
+    double sqrt(double): 开方
+
+ ArrayList - 类, 用来存储数据, 可变长数组 -> 集合
+    所属软件包: java.util
+    数组长度不可变, 数组如果要扩容, 需要用到数组的复制
+    为了解决数组长度不可变的问题, 可以实现数组长度动态变化
+    int[]  Student[]  int[][]  Room[][]
+    ArrayList 仅支持引用类型
+    1.构造方法
+        空参构造器: 没有内容的空的集合
+        ArrayList<E> arrList = new ArrayList<E>()
+        <E>: 泛型, 可以所有的引用类型, 规定集合中元素类型的
+             基本数据类型都有对应的引用类型
+             int -> Integer
+             char -> Character
+             byte -> Byte
+             boolean -> Boolean
+             double -> Double
+    2.常用API
+        void add(E e)
+        E remove(int index): 移除掉index位置的元素, 并返回
+        E get(int index)
+        int size()
+    3.<E>: 泛型, 规定集合中元素的类型
+           没有规定泛型, 集合中的元素可以是任意类型
+           所以使用get()之类的方法时, 就不能确定返回值类型
+           所以, 使用集合时, 需要规定泛型
+
+设计类: 酒店管理系统
+    提取对象: 1个酒店, n个房间, 若干顾客
+    对象对应类
+    类: 成员变量  --> 构造方法
+        成员方法
+
+
+飞机大战:
+    提取对象: 自己的飞机, 敌机, 小蜜蜂, 子弹
+子类 extends 父类
+    自己的飞机:
+        发射的子弹, int life, int 分数
+    敌机:
+        int life
+    小蜜蜂:
+        int life
+    子弹:
+    以上类中相同的成员变量, 和相同的方法, 提取出来
+父类:
+    int x, int y, 图片, int width, int height
+    move() - 移动
+
+Animal 类
+Dog 类
+Cat 类
+继承: extends
+    1.概念:子类/衍生类/扩展类: Dog
+          父类/基类: Animal
+    2., 就继承了父类所有的成员变量和方法
+    3.所有的类子类继承父类, 都有唯一的父类,
+      如果没有写父类, 说明父类就是 Object
+    4.子类中还可以定义自己的独特的成员变量和方法
+      子类的功能一定比父类要强大
+
+特殊情况:
+ 1.子类中的成员变量和父类同名  name
+   Dog d = new Dog();
+   d.name -> 就是指自己定义的name,不是继承过来的name
+   结论: 父子类中的成员变量不要同名
+ 2.子类中可以引用父类对象
+   super
+ 3.创建子类对象之前, 会先创建父类对象
+   加载子类之前, 会先加载父类
+ 4.构造方法: 父类的构造方法不能被子类继承的
+   创建子类对象, 会先默认调用父类的无参构造器
+    原因: 子类构造方法中, 第一行默认 super()
+         可以手动调用父类其他构造方法
+   结论: 子类构造方法中, 一定会先调用父类的构造方法
+        父类中, 建议先写无参构造器
+  5.通过子类对象调用方法时
+    先看子类中有没有定义这个方法, 定义了, 调用子类方法
+    子类中没有这个方法, 调用父类继承的方法
+
+方法的重写\覆盖:
+ 子类中定义的方法, 方法返回值类型\方法名\参数列表
+ 都和父类中定义的方法完全一致
+
+重写Override和重载Overload的区别
+
+飞机大战:
+  提取的父类: move()
+  move() 在所有的子类中都要重写, 父类中的move()方法体就没有意义
+  方法 -> 抽象方法 abstract
+
+abstract: - 抽象的
+抽象方法: 方法没有方法体
+        一个类中, 存在抽象方法, 那么这个类就必须也是abstract
+抽象类: 用abstract修饰的类
+       抽象类不能直接new对象
+       有构造方法, 为了给子类使用
+       抽象类的非抽象子类, 必须实现/重写抽象类的所有抽象方法
+判断:
+  1.有抽象方法的类叫抽象类    √
+  2.抽象类就是有抽象方法的类  ×
+  3.抽象类中可以没有抽象方法  √
+
+小结:
+  ArrayList -> 集合很重要
+  酒店管理系统 -> 今晚重敲
+  继承: 父子关系, 构造器, 方法重写
+       抽象类, 抽象方法, super
+
+
+
+
+

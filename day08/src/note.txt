@@ -1,0 +1,108 @@
+回顾:
+  权限修饰符: public -> protected -> (default) ->private
+  重写:
+    1.方法名和参数列表一致
+    2.子类中重写的方法, 返回值类型[小于等于]父类返回值类型
+    3.权限修饰符,[大于等于]父类方法的权限
+  final:
+   类: 类不能被继承
+   方法: 方法不能被重写
+   变量: 常量, 不能被修改, 必须初始化
+  常见的final类:
+   String Math
+  String不可变的: CharSequence - 字符序列 - 字符数组
+    底层实现: 字符数组 -> 字节数组 byte[] value
+         final value = 其他值
+    String str = "hello";
+    str = "hi";
+  接口:
+    1.公共的抽象方法
+    2.公共的静态常量 public static final
+    3.公共的默认方法
+    4.公共的静态方法[私有的]
+    5.私有的方法
+  使用接口:
+    实现类 implements 接口
+    实现所有的抽象方法, 默认方法[可以选择性重写]
+    创建实现类对象, 调用方法
+  类和接口叫做多实现, 要重写/覆盖[实现]所有的接口的所有抽象方法
+    和 重复的默认方法
+  类和类 叫做单继承, 父类中的方法和父接口中的默认方法重复了, 优先调用父类中的方法
+    Zi extends Fu implements InterfaceA
+
+接口作为方法参数, 接口作为返回值:
+    具体使用的都是接口的实现类对象
+多态的前提:
+class MyInterfaceAImpl extends Object implmenets MyInterfaceA
+  MyInterfaceA a = new MyInterfaceAImpl() -> 向上造型
+  Object o = new MyInterfaceAImpl() -> 向上造型
+  Fu fu = new Zi();
+  Animal a = new Cat();
+
+  父类型引用 指向 子类型对象 -> 向上造型
+      父类型 a = new 子类型对象();
+      接口类型 a = new 实现类对象();
+
+  编译器 看 = 左边类型, 运行时JVM 看 = 右边类型
+
+  左边类型决定了变量 能调用哪些方法,
+  右边类型决定了最终使用的方法是哪个 - 优先调用自己重写过的
+
+  口诀: 编译看左边, 运行看右边
+
+  提前得知, 引用 到底是什么类型的对象
+  Animal -> abstract void eat()
+  Cat -> void catchMouse() {}
+  Dog -> void watchHouse() {}
+    多态: Animal a1 = new Cat();
+         Animal a2 = new Dog();
+  ClassCastException: 类型转换异常
+  解决方案: 转换之前先判断引用 实际上是不是要转换的类型对象
+        引用a  instanceof  子类型 => boolean
+        问 a 实际上是不是子类型对象
+
+内部类: 类中写个类
+    人体类  心脏类
+    车类    发动机类
+  种类: 成员内部类,静态内部类,局部内部类[匿名内部类]
+  成员内部类: 权限 public,protected,(default),private
+    语法:
+      public class Outer{
+        // ...
+        public class Inner{
+          //....
+        }
+      }
+    使用:
+      内部类中, 可以随意使用外部类成员
+      外部类中, 使用内部类成员时需要创建内部类对象
+      无关类中, 使用内部类成员
+        1.间接调用, 在外部类方法中调用内部类方法
+          main方法中, 调用外部类方法
+        2.直接调用, 需要创建内部类对象
+          外部类.内部类 a = new 外部类().new 内部类();
+    内部类和外部类有同名成员变量
+      外部类的成员变量: 外部类.this.变量
+      内部类的成员变量: this.变量
+
+  局部内部类: 在方法内部定义类, 只在方法中有效
+    在局部内部类中, 使用局部变量, 必须是final的
+    JDK8 后, 局部变量事实上没有发生改变, 那么final可以省略
+    一次性的类, 只能用一次
+    不能使用权限修饰符
+
+    局部内部类, 需要类只使用一次, 优化 -> 匿名内部类
+
+  匿名内部类: 继承抽象类或实现接口
+    语法: new 接口/抽象类() {
+        int a;
+        // 实现的所有抽象方法
+    }
+    匿名内部类, 只能用一次, new一个对象
+    匿名对象, 只能使用一次, 只能调用一次方法
+    注意: 匿名内部类 和 匿名对象 不是一回事 ! ! !
+
+  静态内部类 对比 成员内部类 => 静态方法 和 成员方法
+
+
+

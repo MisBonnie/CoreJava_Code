@@ -1,0 +1,170 @@
+回顾:
+  Object: 所有类的父类
+    getClass() -> 类加载, 字节码对象
+    clone() -> 深克隆和浅克隆
+    wait() * 3
+    notify() notifyAll()
+    finalize() -> GC
+    toString()
+    equals()
+    hashCode()
+
+  Date: 时间- 年月日 时分秒 星期 时区 毫秒
+    new Date() - 当前系统时间
+    new Date(long time) - time毫秒所代表的时间
+
+    long getTime()
+    void setTime(long)
+  long 类型表示时间 毫秒
+    计算效率
+  Calendar: 抽象类
+    static Calendar getInstance() - 获得万年历对象,当前系统时间
+
+    1.获得时间分量  get(分量字段)
+    2.设置时间分量  set(分量字段, 值)
+    3.计算时间分量  add(分量字段, 改变的值)
+
+    Date getTime()
+    void setTime(Date)
+
+  时间的格式化 DateFormat - 抽象类
+    new SimpleDateFormat("yyyy-MM-dd HH:mm:ss E")
+    Date -> String 显示
+      String format(Date)
+    String -> Date 时间转换
+      Date parse(String)
+
+String: 底层实现是final的字节数组 byte[]
+  回顾: 不可变的字符序列
+       new String() -> ""
+       new String("hi") -> "hi"
+       new String(char[] {'h','e'}) -> he
+       new String(byte[] {97, 65}) -> aA
+
+       String str = "he";
+       String str1 = "h" + "e";
+       str == str1 -> true  -> 字符串常量池
+
+       int length()
+       int indexOf(String)
+       String substring(int start, int end)
+       char charAt(int index)
+       boolean startsWith(String)
+       boolean endsWith(String)
+       String trim()
+       boolean equals(String)
+       boolean equalsIgnoreCase(String)
+       String toUpperCase()
+       String toLowerCase()
+       String replace(String old, String new)
+
+  public final class String extends Object
+        implements Serializable, Comparable<String>, CharSequence
+                     可序列化的       可比较的            字符序列
+  正则表达式: 字符串的一些排列规则 -> String
+      格式的校验: 邮箱格式/身份证格式/电话号码格式
+      长短的判断: 至少多少个字符, 最长多少个字符
+      内容的限定: 只能有字母\数字\下划线
+      ...
+      开始符号: ^
+      结束符号: $
+
+      常用标识
+        []: 一个字符的位置
+            例如: [abc] -> 这个字符的位置内容只能是a或者b或者c
+                  [a-z] -> 这个字符的位置内容可以是所有的小写字母
+                  [0-9] [A-Z] [a-zA-Z0-9_]
+        数量词:
+           +: 出现一次或多次
+           ?: 一次或者0次
+           *: 0次或者多次
+           {n}: 刚好n次
+           {n,m}: n~m次
+           {n,}: 至少n次
+             例如: a+ -> "aa" "aaa" "b"(×)
+                  [a-z]{3} -> "ef"(×)  "abc"  "ztf"
+                  [a-z0-9]{4,} -> "1234" "1a4f"
+                  [a-zA-Z][a-zA-Z0-9_]{5,17} -> 简化: [a-zA-Z]\w{5,17}
+        特殊例如:
+          ^abc$ -> "abc"
+          ^(SB|QNMLGB|nf)$ -> "abc" "bcd"
+        预定义字符类:
+          . : 所有字符
+          \d : 数字 [0-9]
+          \s : 空白字符：[ \t\n\x0B\f\r]
+          \w : 单词字符：[a-zA-Z_0-9]
+          \D : 非数字 [^0-9]
+        转义: 有特殊意义的字符
+              .  \  + ? * -
+             表示字符本身, 需要 \字符
+             \. \\  \+ \? \* \-
+
+        例子: 163邮箱地址正则表达式: ^[a-zA-Z]\w{5,17}@163\.com$
+             [a-zA-Z0-9_.-]: []中出现的特殊字符, 不需要转移, 就代表字符本身
+      相关的的API:
+        1.boolean matches(String regex)
+        2.String replaceAll(String regex, String newStr)
+        3.String[] split(String regex)
+
+String 是不可变的, 所以频繁的字符串拼接非常消耗时间/内存
+解决方案: 提供了新的类, 可变字符串 StringBuffer StringBuilder
+StringBuffer : 线程安全的
+StringBuilder: 效率高
+    构造方法:
+        StringBuilder sb = new StringBuilder() -> ""
+        String str = sb.toString()
+        StringBuilder sb = new StringBuilder(String)
+    常用API: - 返回值都是this, 在对象本身进行修改
+        append(Object o) -> 在字符串末尾追加新的内容
+        delete(int start, int end)
+        replace(int start, int end, String replacement)
+        insert(int index, String str)
+        reverse()
+
+包装类: 将基本数据类型做了封装,
+       每一种基本数据类型都对应一种包装类型
+       一切皆对象 - 引用, 基本数据类型不属于对象
+    byte -> Byte
+    short -> Short
+    int -> Integer
+    long -> Long
+    double -> Double
+    float -> Float
+    char -> Character
+    boolean -> Boolean
+
+    Integer.parseInt("12a"); ->> NumberFormatException
+    Integer.toBinaryString() -> 将整数转换成二进制的字符串形式
+    Integer.parseInt("12a", 16) -> 将字符串以16进制方式转换成数字
+
+    // 1.1 int -> Integer 隐藏了自动装箱的操作
+    i1 = i; // 等同于: i1 = Integer.valueOf(i);
+    // 1.2 Integer -> int 隐藏了自动拆箱的操作
+    i = i1; // 等同于: i = i1.intValue();
+
+    所有的数值的包装类都拥有统一的父类: Number
+    所有的包装类, 都是 final 类
+
+    Integer: 常量池, 范围 -128 ~ 127
+
+集合: java.util.Collection  Map -> 接口
+     Collection coll = new ArrayList()
+     添加\移除\清空\判断是否为空\判断是否包含\长度
+     注意: 没有单独获得某个元素的方法, 只能迭代/遍历
+        Iterable -> 可迭代的, iterator() -> 获得迭代器
+
+     迭代器: 获得迭代器时, 游标指向集合中第一个元素之前
+
+     c1.addAll(Collection c2): 将c2中所有的元素加到c1中
+     c1.containsAll(Collection c2): 问c1中是否包含c2中的所有元素
+     c1.retainAll(Collection c2): 将c1中元素仅保留c2中出现的元素
+     c1.removeAll(Collection c2): 将c2中出现过的元素从c1里面移除掉
+
+
+复习ArrayList:
+   void add(Object o)
+   Object remove(int index)
+   Object get(int index)
+   int size()
+
+

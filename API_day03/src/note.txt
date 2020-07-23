@@ -1,0 +1,102 @@
+回顾:
+  String
+    boolean matches(String regex)
+    String[] split(String regex)
+    String replaceAll(String regex, String replacement)
+  正则表达式:
+    {n} + ? * {n,} {n,m}
+    \w  \d  .  \s
+    [一个字符的可选项]
+  StringBuilder  StringBuffer
+    append
+    insert
+    delete
+    replace
+    reverse
+  包装类: Integer i ; int a;
+    自动装箱: i = a; -> Integer.valueOf(a)
+    自动拆箱: a = i; -> i.intValue()
+
+    Integer: 常量池 -128~127
+
+  Collection:  -> Iterable
+    void add(Object ele)
+    void remove(Object ele)
+    boolean contains(Object ele)
+    boolean isEmpty()
+    int size()
+    void clear()
+    void addAll(Collection )
+    void removeAll(Collection)
+    boolean containsAll(Collection)
+    void retainAll(Collection)
+
+    Iterator iterator()
+        Object next()
+        boolean hasNext()
+        void remove()
+
+1.String -> 字符序列 (中文\英文)
+    JVM -> 1个char = 2个byte Unicode
+    操作系统 -> windows:GBK->GB2312  Linux:UTF-8  ISO8859-1
+        UTF-8: 1char = 3byte
+        gbk: 1char = 2byte
+
+    API:
+        byte[] getBytes(); -> 根据默认字符集来编码
+        new String(bs); -> 按照默认字符集解码
+
+        byte[] getBytes("charset") -> 按照指定字符集编码
+        new String(bs1, "gbk"); -> 按照指定字符集解码
+
+泛型: 接口/类<泛型/类型>
+      将类型作为参数, 编译时有效, 规范程序员的 -> 编译时语法
+      泛型的本质是, 支持Object类型
+
+      定义泛型: 类/接口的定义上就加上<E>
+               在这个类的方法中, 具体类型就可以使用 E 来代替
+      泛型的意义: 当类/方法 可以支持任意类型时, 就可以将类型动态传入
+                 不确定类型, 但是又想要具体类型
+
+数据结构: 存储数据的方式
+  数组, 链表, 栈, 队列, 二叉树
+
+  栈: 弹夹, push():压栈  pop():弹栈
+      Stack: 先进后出, 后进先出
+  队列: 先进先出 - 进队列, 出队列
+  链表: 末尾添加元素, 插入元素, 获得指定位置的元素, 删除指定位置元素
+
+  数组和链表的优劣势比较:
+    1.数组的物理空间连续, 碎片化空间使用不彻底
+      链表物理空间不连续, 空间使用彻底
+    2.链表只能从head开始访问, 访问效率低
+      数组可以随机访问任意元素, 访问效率高
+    3.链表插入/移除元素, 只需要操作1~2个元素, 效率高
+      数组插入/移除元素, 涉及到大量元素的移动, 效率低
+
+  数组结构: ArrayList
+  链表结构(双向链表): LinkedList
+  队列: Queue
+  栈: Stack, Deque
+
+  Collection(I): 集合
+    |- List(I) -> 顺序结构(数组和链表)
+         |- ArrayList - 数组
+         |- LinkedList - 双向链表
+         |- Vector - 数组
+    |- Queue(I) -> 队列结构(普通队列)
+         |- Deque(I) 队列结构(双端队列, 栈)
+             |- LinkedList
+    |- Set(I) -> 散列结构(没有顺序)
+        |- HashSet
+        |- SortedSet(I)
+            |- TreeSet - 二叉树
+
+    List的API: 可以使用index
+        void add(int index, E element)
+        void addAll(int index, Collection<? extends E> c)
+        E get(int index)
+        int indexOf(Object o)
+        int lastIndexOf(Object o)
+        E remove(int index)
+        E set(int index, E element)

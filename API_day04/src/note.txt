@@ -1,0 +1,105 @@
+回顾:
+  字符集: UTF8 GBK ISO8859-1
+    解码: 字节数组 -> 字符
+    编码: 字符 -> 字节数组
+    String
+  泛型: 将类型作为参数 <E> -> <String>
+        <? extends Number>
+  数据结构
+    栈: 先进后出
+    链表: 结点为单位, 只能从head访问
+
+    List: 有序列表, 有序号
+       add(int index, E e)
+       get(int index)
+       set(int index, E e)
+       remove(int index)
+
+    ArrayList: 数组
+    LinkedList: 链表
+    Vector: 数组
+
+Collection.
+    add,remove,contains,isEmpty,clear,size..,iterator
+List
+    add(index,e),remove(index),get(index),set(index,e)..
+
+1.迭代器
+    中使用迭代, 然后直接使用  集合.remove(迭代出的元素)
+    异常: ConcurrentModificationException
+            安全隐患
+    解决: 不能在迭代器内部使用集合自己的remove方法
+         用 iterator.remove() 来替代
+         remove(): 删除当前游标所在位置的元素
+                   不会改变游标位置
+2.迭代器的简化 -> 增强for循环 forEach
+    for(每一次迭代出来的元素临时变量 : 要迭代的集合/数组) {
+
+    }
+    例如:
+    for(String s : col) {
+        System.out.println(s);
+    }
+    注意: forEach只能遍历元素使用, 不能迭代移除
+3.List: 特点 -> 有序的[有下标], 允许重复元素
+    有序: 添加顺序就是访问顺序
+    排序: 由小到大, 由大到小
+    List的遍历/迭代: 可以用Iterator
+                    forEach
+                    for
+4.Collection: toArray
+    Object[] toArray():无参,返回值类型永远都是Object[],和泛型无关
+    T[] toArray(T[]):参数->一个具体类型的数组, 作用只是为了提供类型
+5.Collection: remove
+    remove(Object o)
+        原理: 遍历集合, 将每一个元素.equals(o)
+    contains(Object o)
+6.java.util.Arrays: 数组相关工具类
+    toString() -> 打印数组内容
+    sort(arr) -> 数组排序
+    copyOf() -> 数组复制
+
+    asList(arr) -> List 将数组转换成集合
+                -> 本质上还是数组, 数组长度不可变
+7.java.util.Collections: 集合相关的工具类
+    sort(List) -> 给List排序, 所有元素必须是可比较的
+
+    java.lang.Comparable -> 接口, 可比较的
+        int compareTo(T t)
+
+    Collections.sort(list)
+        list.sort(null)  null -> Comparator
+            1.列表list -> 数组a
+            2.Arrays.sort(a, (Comparator) c); c->null
+                if (c == null) {
+                   sort(a); -> ((Comparable) dest[j-1]).compareTo(dest[j])>0; j--)
+                } else {
+                    c.compare(pivot, a[mid])
+                }
+    Collections.sort(list, new Comparator)
+        Comparator <? super T>
+
+    结论 -
+    sort: 可以使用自定义比较器Comparator, 元素的类可以没有任何要求
+          可以不使用比较器, 要求元素的类必须是可比较的Comparable
+    Comparator: 可以忽略掉本身的比较规则 - compareTo
+                自定义比较规则
+
+有序二叉树: - 不允许重复
+    特点: 左节点 < 父节点 < 右节点
+    中序遍历: 左节点, 中间节点[根节点], 右节点
+    遍历结果: 升序
+
+
+
+
+JavaBean规范: 实体类的书写规范
+1.成员变量私有化, 提供get/set方法
+2.定义无参构造方法
+3.重写toString
+4.重写equals 和 hashCode
+5.基本数据类型建议使用包装类
+
+
+
+

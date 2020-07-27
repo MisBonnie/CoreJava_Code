@@ -1,0 +1,72 @@
+回顾:
+  Collection(I): Iterable
+         add(E e)-追加元素, remove(E e)-删除指定元素
+         contains(E e)-是否包含指定元素
+         addAll(Collection)
+         Object[] toArray()
+         E[] toArray(E[])
+    List(I): ArrayList:数组 LinkedList:双向链表 Vector
+        可使用下标
+            add(index, E e), remove(index)
+            get(index), set(index, E e)
+    Set(I)
+    Queue(I): - 队列(offer/poll/peek)
+        |- Deque(I) - 双端队列(offerFirst/offerLast...)
+                    - 栈(push/pop)
+            |- LinkedList
+
+  Iterator: next() hasNext() remove()
+  forEach: for(E e:Collection/arr)
+
+  List Arrays.asList(arr) -> 不可以修改元素个数
+  Collections.sort(List) -> List中的元素必须是可比较的Comparable
+  Collections.sort(List, Comparator)
+  Collections.shuffle(List) -> 打乱
+  栈: 先进后出, push() pop()
+  队列: 先进先出
+  双端队列: 两边都可以进, 两边都可以出
+  栈: Deque[链表]. Stack[数组]
+
+  数组: 物理空间连续, 自带位置, 快速定义到任意位置-查询效率高
+  链表: 物理空间不连续, 结点为单位, 只能从头结点访问
+
+  二叉树: 左 < 中 < 右
+         中序遍历
+
+Set(I): API 和 Collection 的API 一样
+  |- HashSet: 散列表/无序的, 不是随机!! 不允许重复元素
+        add原理: 详见图
+        remove原理
+        结论: hashCode和equals要一起重写
+        注意: equals方法判断相同的两个对象, hashCode方法结果一定要一致
+             equals判断不相同的两个对象, hashCode结果要尽量不一样
+
+  |- SortedSet(I)
+        |- TreeSet: Comparable Comparator
+             特点: 不允许重复, 和equals方法无关
+                  取决于 compare 或者 compareTo 方法
+
+复习: Object中 hashCode() 方法默认得到的是 对象的物理地址
+      hashCode没有重写, 所有对象的哈希值都不一样
+      哈希值不一样, 定位到的set中的位置, 可能相同
+
+Map(I): 映射表 key->value, 通过key 获得value
+    Map中的key, 单独的一部分, 就是Set
+    格式: xx = xxx, xx:xxx
+  |- HashMap
+  |- TreeMap
+
+常用API
+    V put(key, value)
+    V remove(key)
+    V get(key)
+    containsKey containsValue isEmpty size...
+    putAll
+
+迭代Map对应的三个方法
+    entrySet()
+    keySet()
+    values()
+案例: 手动输入字符串 ewretyuyjytrerthy
+     统计这个字符串中每个字符出现的次数
+     e:3, w:1, r:3, t:3...

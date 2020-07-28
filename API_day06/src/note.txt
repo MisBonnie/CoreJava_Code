@@ -1,0 +1,135 @@
+回顾:
+  Set:
+    |- HashSet: 散列表, 无序, 不允许重复
+          hashCode()定位, equals判断重复
+    |- TreeSet: 二叉树, 排序, 不允许重复
+          比较器Comparator, Comparable
+          new TreeSet(Comparator)
+          new TreeSet()  -> Comparable
+    Comparable的已知实现类: Date String Integer..
+  Map
+    V put(key, value): 添加(返回null), 替换value(被替换掉的value)
+    V get(key): 通过key, 获得value
+    V remove(key): 通过key, 删除key-value, 返回被删掉的value值
+
+    迭代方式:
+      Set<Entry<K,V>> entrySet(): key-value封装成Entry
+      Set<K> keySet(): 遍历key
+      Collection<V> values(): 遍历value
+
+    |- HashMap: key无序, 并且不重复
+                HashSet 就是value一样的 HashMap
+    |- TreeMap: key排好序的
+    |- LinkedHashMap: key有序的
+
+  1.Hashtable 和 HashMap 有什么区别?
+     存储内容-null, 线程安全, 效率, 底层实现结构
+  2.LinkedHashMap 和 HashMap 有什么区别?
+     底层实现结构
+  3.ConcurrentHashMap 和 Hashtable 和 HashMap
+     底层实现结构
+
+JavaSE 小结1:
+ 1.Object  11个方法
+    toString() equals() hashCode()
+ 2.String  不可变字符序列
+    正则表达式  \w . \d + ? *
+    split
+ 3.StringBuilder / StringBuffer
+    append
+    delete
+    replace
+    insert
+ 4.long Date Calendar
+    时间显示 - Date, 格式化 SimpleDateFormat  DateFormat
+    时间计算 - Calendar, add set get 分量字段
+    效率计算 - long
+ 5.包装类
+    Integer i = 10 ; -> 自动装箱 Integer.valueOf()
+    int a = i; -> 自动拆箱 i.intValue()
+ 6.集合
+    Collection: add remove contains isEmpty size clear
+        |- List -> 跟index相关 get add remove set
+            |- ArrayList
+            |- LinkedList -> addFirst/addLast
+        |- Set
+            |- HashSet
+            |- TreeSet
+        |- Queue -> 队列 offer poll peek
+            |- Deque -> 双端队列 offerFirst/Last
+                     -> 栈 push pop
+                |- LinkedList
+    Map
+     |- HashMap
+     |- TreeMap
+     |- LinkedHashMap
+     |- Hashtable
+            |- Properties
+     |- ConcurrentHashMap
+
+错误: Error -> StackOverError  严重问题, 内存相关, 必须要解决的
+异常: Exception -> 不那么严重
+        |- RuntimeException -> 运行时异常 [可以不需要处理]
+                |- ArrayIndexOutOfBoundsException
+                |- ClassCastException
+                |- NullPointerException
+        |- 已检查异常 [必须要处理的异常]
+              |- ParseException
+              |- IOException
+              |- UnsupportedEncodingException
+Throwable: 可抛出的
+运行时异常: 可以不处理, 也可以处理, 也叫未检查异常
+已检查异常: 必须处理, 也叫编译时异常
+
+处理异常:
+    try - catch : 捕获异常
+    throws : 抛出异常
+
+1.遇到未处理的运行时异常, 程序终止, 并且打印错误栈路径
+2.用try-catch捕获异常, 注意:
+   a. 可能出现异常的代码, 必须写在try中
+   b. try 后面 必须有至少一个 catch 代码块
+      可以有一个 finally 代码块
+   c. try代码块中的代码出现异常, 程序不会终止,
+      try中在出现异常的那行代码之后的所有语句都不会执行
+      catch中 是为了出现异常后准备的代码
+   d. 一个try后面可以跟多个catch捕获不同的异常
+        多个catch一定是父类型异常放在子类型异常后面
+        无关的异常类型, 顺序不作要求
+   e. catch中定义的是父类异常, 那么可以将父类所有的子类异常一起捕获
+   f. try-catch 可以嵌套
+   g. finally 无论有没有出现异常, 都会执行到的语句块
+      即使在try 或者 catch 写了return, 也会执行到finally
+      finally 扫尾工作, 比如用来释放资源
+3.throws: 抛出异常
+    产生异常的情况: 1.代码有误, 执行会主动抛出异常
+                  2.手动抛出异常对象
+                        throw 异常对象
+  throws 声明在方法上, 等同于将异常交给方法调用者继续处理
+4.异常处理的原则:
+     自己能解决的, 就自己解决, try-catch
+     自己不能解决的, 再向外抛出, throws
+5.自定义异常
+    class MyException extends Exception: 已检查异常
+    class MyException extends RuntimeException: 运行时异常
+
+6.异常API
+    构造方法 new xxException(String message): message就是异常的信息
+    e.printStackTrace(): 打印异常的栈路径
+    e.getMessage(): 获得异常信息
+
+线程的父类: Thread
+程序: 安装的软件, 例如: QQ WeChat LOL...
+进程: 在运行的程序
+线程: 进程中多个同时在执行的任务
+
+主方法程序运行就是打开了一个进程, 进程中至少存在一个线程 - 主线程
+
+开启多线程任务: 创建多个线程对象 Thread
+    1.自定义线程类, 继承 Thread -> 重写run方法
+      -> 创建线程对象 -> start() 开启线程
+
+    2.自定义任务类, 实现了Runnable接口 -> 重写run方法
+      -> 创建任务对象, 通过任务对象, 构造线程对象
+      -> start() 开启线程
+

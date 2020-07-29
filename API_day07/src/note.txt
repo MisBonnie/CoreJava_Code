@@ -1,0 +1,87 @@
+回顾:
+  Map: LinkedHashMap -> key按照添加顺序排序的
+       TreeMap -> key 排好序的 Comparable 或者 Comparator
+  异常:
+       运行时异常: 父类 RuntimeException
+       已检查异常: 父类 Exception, 必须处理的
+    处理异常的方式:
+       try - catch -..catch.. - finally
+       throws - 抛出, 声明在方法上的
+                方法的调用者还是要处理异常
+                main上throws异常, JVM 中断处理
+    出现异常的情况:
+       1.代码出错, 通常会有运行时异常
+       2.throw 异常对象 - 手动抛出
+    自定义异常:
+       class 异常的名字 extends Exception/RuntimeException
+          添加一些构造方法即可
+  线程:
+    程序
+    进程
+    线程
+    多线程实现的两种方式:
+      1.自定义一个线程类, extends Thread
+        重写 run 方法
+        创建自定义的线程对象
+        开启线程 start()
+      2.自定义一个任务类, implements Runnable
+        重写 run 方法
+        创建自定义的任务对象
+        通过任务对象, 构造一个线程对象
+        开启线程 start()
+      3.以上两种方式的匿名内部类改写
+
+注意:
+ 1.不是哪个线程先start, 就先执行哪个线程,
+   线程的执行顺序, 是不固定的
+
+线程Thread的构造方法:
+ 1.new 自定义线程类(): 自定义类的构造方法, 随意
+ 2.new Thread(): 无参构造器
+ 3.new Thread(String): String->指定的线程名
+ 4.new Thread(Runnable): Runnable->线程任务
+ 5.new Thread(Runnable, String): Runnable->线程任务, String->指定的线程名
+
+线程Thread常用API:
+ 1.static Thread currentThread(): 获得当前正在执行的线程对象
+ 2.String getName(): 获得线程对象的名字, 线程在创建时可以指定名字, 也可以默认分配名字
+ 3.int getPriority(): 返回此线程的优先级
+   void setPriority(int): 设置线程的优先级
+ 4.boolean isDaemon(): 测试这个线程是否是守护线程
+   void setDaemon(boolean): 设置这个线程是守护线程
+ 5.static void sleep(long): 线程休眠指定时间
+   会有一个已检查异常, 所以必须要 try-catch
+ 6.void join(): 等待调用这个方法的线程结束, 再继续后续代码
+   会有一个已检查异常, 所以必须要 try-catch
+ 7.static void yield(): 主动放弃cpu的时间片
+
+优先级: 1~10
+    改变CPU分配时间片的概率
+守护线程 - 前台线程
+    当所有的前台线程结束, 守护线程也会自动结束
+    GC 就是守护线程
+线程同步 - 多个线程, 共享资源
+    1.synchronized: 同步锁, 只能同时被一个线程持有,
+                  当线程执行完这个方法, 才会将锁释放
+      加到方法上, 同步方法锁
+      加到代码上, 借助对象, 通常是this,
+                 确保同步的线程, 对象共享即可
+    2.Lock - 接口
+      实现类: ReentrantLock lock = new ReentrantLock();
+      加锁: 锁对象.lock();
+      解锁: 锁对象.unlock();
+
+图片加载和显示两个线程:
+ 1.线程1 负责图片的加载任务. 1%~100% -> 加载完成
+ 2.线程2 负责图片的显示任务. 要求图片加载完才能显示
+   线程1 和 线程2 是同时开启的 start()
+
+图片加载/下载 和 图片显示两个线程:
+ 1.线程1 先负责图片的加载任务. 1%~100% -> 加载完成
+        再负责图片的下载任务. 1%~100% -> 下载完成
+                           要求图片显示完才能下载
+ 2.线程2 负责图片的显示任务. 要求图片加载完才能显示
+
+线程通信: 两个线程有共享数据, 线程之间有动作交互
+    wait(): 等待
+    notify(): 唤醒

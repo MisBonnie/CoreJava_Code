@@ -1,0 +1,104 @@
+回顾:
+  线程 通信: 共享资源
+            wait() notify()
+            wait(long) notifyAll()
+  线程池: ExecutorService
+         Executors -> 生产各种线程池对象的工厂类
+         1.单线程的
+         2.固定数量的
+         3.Cached 根据需求来创建线程对象的
+         4.Schedule 定时执行
+  Lambda表达式
+    1.实现函数式接口 @FunctionalInterface
+    2.作为方法参数使用
+
+    (参数列表) -> {方法体}
+    1.参数列表的类型可以省略
+    2.参数只有一个, () 可以省略
+    3.方法体只有一行代码, {} return ; 三者需要一起省略
+
+  可变长参数  参数类型... 参数名 -> 取代数组
+  JDK1.5 常见的注解
+  JUnit: @Test @Before @After
+
+IO: Input/读文件  Output/写文件
+所属软件包: java.io
+1.File - 文件类, 可以表示文件或者目录
+    构造方法:
+       new File(String 文件路径)
+       new File(String 父路径, String 子路径)
+    常用API:
+       获得文件/目录的绝对路径
+       获得file对象中所有的文件 listFiles()
+        File file = new File(".");
+        file.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File f) {
+                // 处理了f, 让他返回true, 表示f要保留
+                // 处理了f, 返回false, 表示f不想保留了
+                return false;
+            }
+        });
+        // filter.accept(f) --> 返回true
+
+        public File[] listFiles(FileFilter filter) {
+            // 得到了这个目录下面所有的文件名字
+            String ss[] = list();
+            if (ss == null) return null;
+            // 创建了一个存储File对象的集合
+            ArrayList<File> files = new ArrayList<>();
+            // 迭代这个名字的数组
+            for (String s : ss) {
+                // 使用文件名, 创建了一个对应的File对象
+                File f = new File(s, this);
+                if ((filter == null) || filter.accept(f))
+                    // 当accept方法返回true, 将这个文件对象加入到list列表中
+                    files.add(f);
+            }
+            // 将list变成数组返回
+            return files.toArray(new File[files.size()]);
+        }
+
+2.路径:
+    绝对路径: window是 - 从盘符开始 C:\xx\xx...
+             Linux是 - /xx/xx (从根目录开始)
+    相对路径: 会有一个参照对象  a.txt
+             参考值: /Users/bonnie/Desktop 相对路径是: a.txt
+                那么a.txt的真实路径: /Users/bonnie/Desktop/a.txt
+             现在a.txt的真实路径: /Users/bonnie/IdeaWorks/corejava/API_day09/a.txt
+                那么现在的参考值: /Users/bonnie/IdeaWorks/corejava/API_day09
+
+             参考值 我们称之为 - 当前目录
+
+             参考值: C:\IdeaWorks\day09\src   相对路径: com/zzxx/demo01/a.txt
+                那么a.txt的真实路径: C:/IdeaWorks/day09/src/com/zzxx/demo01/a.txt
+             . : 当前目录 - 现在的参考值
+             ..: 上一级目录 - 现在的参考值 往上一层
+
+    根据相对路径, 获得当前程序环境下的绝对路径
+    复习: 1.xx.class.getResource("相对路径") -> 得到一个绝对路径
+         2.xx.class.getClassLoader().getResource("相对路径") -> 得到一个绝对路径
+
+    注意:
+      类路径 classpath: 就是src编译后的目录, 也叫编译根目录
+      以上 1 和 2 代码得到的绝对路径, 都是在编译后的目录中, 和src没有直接关系
+      在开发中, 我们是先将文件放入src中的, 会自动编译到类路径中
+
+3.IO 流
+  1.以单位来分: 字节流  字符流
+  2.以层级来分: 底层流  包装流
+
+  字节流: InputStream/OutputStream
+    子类: FileInputStream/FileOutputStream
+  字符流: Reader/Writer
+
+  注意:
+   1.IO所有跟文件相关的流中, 构造方法中需要File作为参数的都可以使用文件路径直接取代
+   2.字节流写和读都是以字节为单位的, 单个字节能不能正常显示出来, 是不确定的
+
+  字节流API:
+    void write(int) : 写入这个int值得低八位
+    int read() : 读文件中一个字节, 并且存入int的低八位, 其余空位补0
+                 当返回 -1 的时候, 说明文件读到了末尾
+
+

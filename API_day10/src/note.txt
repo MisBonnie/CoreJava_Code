@@ -1,0 +1,104 @@
+IO: Input Output
+构造器:
+  File(String path)
+  File(String parent, String child)
+  File(File parent, String path)
+API:
+  boolean exists();
+  boolean isFile();
+  boolean isDirectory();
+  void createNewFile();
+  void mkdir();
+  void mkdirs();
+  void delete();
+  File[] listFiles();
+  File[] listFiles(FileFilter);
+
+字节流: InputStream/OutputStream
+        用来做文件复制
+  包装 -> 高级流: BufferedInputStream/BufferedOutputStream
+        Buffered: 缓冲/缓存
+  FileInputStream
+    int read(): 读单字节, 并且存入int值中返回, 读到文件末尾, 返回-1
+    int read(byte[] bs): 读文件, 并且将读出来的字节存入到指定的数组中,
+                         最多一次读出来bs.length个字节
+                         返回读出来的字节个数, 读到文件末尾, 返回-1
+    int read(byte[] bs, int offset, int length);
+          自行了解
+  FileOutputStream
+    void write(int): 写单字节, 指定int值得低八位
+    void write(byte[]): 将这个字节数组中所有的字节一起写入
+    void write(byte[], int offset, int length)
+
+扩展: 文件加密 -> 原理, 将读出来的字节做了运算后写入到新文件中
+         解密 -> 将加密过的文件, 再读出, 做一个还原运算, 重新写入
+         运算 -> 为了避免byte取值范围溢出, 同时为了避免加密解密两套代码
+                一般使用 ^ 运算
+      1 2 4 8 16 32 64
+      63 = 32 + 16 + 8 + 4 + 2 + 1
+             00111111
+      ^ 13 = 00001101
+           = 00110010
+      ^ 13 = 00001101
+           = 00111111
+
+字符流: Reader/Writer
+    InputStreamReader(InputStream in, String charsetName) - 指定字符集
+    InputStreamReader(InputStream in) - 默认字符集
+        int	read() 读一个字符
+        int	read(char[] cbuf) 将字符读入数组。
+        int read(char[] cbuf, int off, int len) 将字符读入数组的一部分。- 了解
+        注: 以上三个方法, 返回 -1 都标记着读到文件末尾
+
+    OutputStreamWriter(OutputStream out, String charsetName)
+    OutputStreamWriter(OutputStream out)
+        void write(char[] cbuf) 写入一个字符数组。
+        void write(char[] cbuf, int off, int len) 写入字符数组的一部分。
+        void write(int c) 写入单个字符
+
+包装字符流 -> 缓冲字符流
+    通常用来读写文件内容
+    BufferedReader(Reader)
+        String readLine(): 读取一整行, 返回null 标记读到文件末尾
+    PrintWriter
+        1.只能清空原文件内容, 但是可以指定字符集
+        PrintWriter(String fileName, String csn)
+        2.可以在原文件上追加内容, 但是不可以指定字符集, 可以自动刷新缓冲区
+        PrintWriter(OutputStream out, boolean autoFlush)
+        3.可以在原文件上追加内容, 可以指定字符集, 可以自动刷新缓冲区
+        PrintWriter(Writer out, boolean autoFlush)
+
+        void print(Object): 写出内容, 不加换行
+        void println(): 写出内容, 并且换行
+        注意: 自动刷新的功能, 只有println方法具有
+              print方法 必须手动刷新
+对象输入输出流:
+    对象 -> 文件[字节]   : 序列化
+    文件[字节] -> 对象   : 反序列化
+
+    ObjectInputStream(InputStream)
+        Object readObject()
+    ObjectOutputStream(OutputStream)
+        void writeObject(Object)
+    Serializable: 可序列化的
+        接口中没有常量, 也没有抽象方法, 空接口
+        序列化接口没有方法或字段，仅用于标识可串行化的语义。
+
+    serialVersionUID: 给类添加固定的序列版本号
+    transient: 修饰的变量, 在序列化的时候, 会被忽略掉
+
+
+小结:
+    字节流(缓冲)
+    字符流(缓冲)  --> 内容肯定能读懂, 对字符操作
+    对象流       --> 对象变成字节(看不懂)
+
+JavaBean规范:
+1.所有成员变量私有化, 并且提供get/set方法
+2.必须要有空参构造方法
+3.基本数据类型建议使用包装类
+4.实现 Serializable 接口
+5.重写 equals, hashCode, toString 方法
+
+
+

@@ -1,0 +1,86 @@
+回顾:
+  字节流: InputStream/OutputStream
+    FileInputStream
+        int read(): 读一个字节, 并且作为int返回
+        int read(byte[] bs): 最多读bs.length个字节, 存入bs数组中, 返回读取的字节个数
+        返回-1, 标志文件结束
+    FileOutputStream
+        void write(int): 写一个字节, int的低八位
+        void write(byte[] bs): 写bs数组
+        void write(byte[] bs, int offset, int len): 写数组的一部分
+    包装类:
+    BufferedInputStream
+    BufferedOutputStream
+        void flush(): 手动刷新缓冲区
+        void close()
+
+  字符流: Reader/Writer
+    InputStreamReader
+        int read(): 读一个字符, 并且作为int返回
+        int read(char[] chs): 最多读chs.length个字符, 存入chs数组中, 返回读取的字符个数
+        返回-1, 标志文件结束
+    OutputStreamWriter
+        void write(int): 写一个字符, int的低16位
+        void write(char[] chs): 写chs数组
+        void write(char[] chs, int offset, int len): 写数组的一部分
+    包装流:
+    BufferedReader:
+        String readLine(): 读一整行
+        返回null, 标志读结束
+    PrintWriter:
+        void print(xx)
+        void println(xx): 可以自动刷新autoFlush
+  对象流:
+    ObjectInputStream
+        Object readObject(): 读对象
+        抛出异常 EOFException , 文件读结束
+    ObjectOutputStream
+        void writeObject(Object): 写对象
+    对象 -> 字节: 序列化
+    字节 -> 对象: 反序列化
+    可序列化的: Serializable
+    serialVersionUID: 标记类的版本号
+    transient: 标记的属性, 在序列化的时候会被忽略
+
+  文件复制:
+    BufferedInputStream/BufferedOutputStream
+  文件内容读写:
+    BufferedReader/PrintWriter
+    FileReader/FileWriter
+  对象读写:
+    ObjectInputStream/ObjectOutputStream
+
+属性集: Properties, 仅支持String类型的属性映射
+  extends Hashtable implements Map
+  key - value,
+  推荐使用的方法
+    void setProperty(String key, String value)
+    String getProperty(String key)
+    加载属性集:
+        void load(Reader)
+        void load(InputStream)
+
+JDK 8 特性
+  函数式编程: Lambda表达式(函数式接口作为方法的参数)
+  函数式接口: 接口中只有一个抽象方法
+  常用函数式接口: Supplier Consumer Predicate Function
+  Supplier: 生产者 - T get();
+  Consumer: 消费者 - void accept(T t); 使用这个对象
+            默认方法 - andThen(Consumer)
+                     将两个消费方式组合在一块
+  Predicate: 对对象做判断 - boolean test(T t);
+            默认方法 - or(||) and(&&) negate(!)
+  Function<T, R>: 类型转换 - R apply(T t);
+            默认方法 - andThen(Function)
+                     连续做两种类型转换
+  Stream流: 操作 数组或者集合
+    获取流: 1.集合 Collection Map
+           2.数组
+    常用API:
+       void forEach(Consumer) - 终结方法
+       Stream<T> filter(Predicate) - 延迟方法
+            Predicate中test返回true, 是保留在流中的
+       Stream<R> map(Function<T, R>) - 延迟方法
+            将 流中的 T类型的数据, 转成 R类型数据, 并且存入新的流中
+       static Stream<T> concat(Stream, Stream)
+            将两个流拼接成一个

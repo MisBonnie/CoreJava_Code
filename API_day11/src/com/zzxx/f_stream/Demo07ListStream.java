@@ -36,8 +36,8 @@ public class Demo07ListStream {
         // 5. 将两个队伍合并为一个队伍;存储到一个新集合中。
         Stream<String> newStream = Stream.concat(stream1, stream2);
         // 6. 根据姓名创建Person对象;存储到一个新集合中。
-        Stream<Person> personStream = newStream.map(name -> new Person(name));
+        Stream<Person> personStream = newStream.map(Person::new);
         // 7. 打印整个队伍的Person对象信息。
-        personStream.forEach(p -> System.out.println(p));
+        personStream.forEach(System.out::println);
     }
 }

@@ -1,0 +1,165 @@
+回顾:
+  JDK 8 新特性
+  函数式接口: FunctionalInterface
+   Supplier<T>: T get(); -> 生产一个对象
+   Consumer<T>: void accept(T t) -> 消费这个t对象
+                andThen(Consumer<T>) -> 拼接两个消费方式
+   Predicate<T>: boolean test(T t) -> 判断
+                and(Predicate<T>): &&
+                or(Predicate<T>): ||
+                negate(): !
+   Function<T, R>: R apply(T t) -> 将T转换成R
+                andThen(Function<T1, R1>) -> 最终转换为R1类型
+  Stream流: 数组或者集合操作的简化
+   Collection: Stream<T> stream()
+   Stream: static Stream<T> of(T[] / T...)
+   延迟方法: filter(Predicate)
+            map(Function)
+            limit(long)
+            skip(long)
+            static concat(Stream, Stream)
+   终结方法: forEach(Consumer)
+            long count()
+
+方法引用: Lambda 的简化
+   对象 类 this super 数组
+   普通方法  静态方法  构造方法  new数组
+
+   1.方法引用是对Lambda的优化, 换句话说是在Lambda内部调用了方法
+   2.Lambda内部调用的方法使用的参数, 就是Lambda传递进来的参数
+   3.方法引用也遵循了之前学习的面向对象的理论知识
+        普通方法需要对象来调用
+        静态方法需要类来调用
+        ....
+
+1.通过对象名引用成员方法
+    a.准备一个函数式接口
+    b.准备一个方法 method, 用于接收 函数式接口 作为方法参数
+    c.准备一个类, 类中要有一个成员方法printUpperCase
+    d.因为要使用Lambda表达式, 所以需要调用 method 方法
+         并且需要在Lambda表达式内部调用 printUpperCase
+         printUpperCase方法的参数就是Lambda传递进来的参数
+2.通过类名称引用静态方法
+    a.准备一个函数式接口
+    b.准备一个方法 cal, 用于接收 函数式接口 作为方法参数
+    c.准备一个类 Math , 类中要有一个静态方法 abs
+    d.因为要使用Lambda表达式, 所以需要调用 cal 方法
+        并且需要在Lambda表达式内部调用 Math.abs 静态方法
+        abs 方法的参数就是Lambda传递进来的参数
+3.通过super引用成员方法
+    a.准备一个函数式接口
+    b.准备一个父类, 父类中有一个普通成员方法 hi(String)
+    c.准备一个子类[, 可以重写hi方法]
+    d.子类中要有一个sayHello方法, 用于接收 函数式接口 作为方法参数
+    e.在子类中再次准备一个方法, show(), 用于调用sayHello
+        可以传递Lambda表达式
+        需要在Lambda表达式中 调用 父类的hi方法
+        就会用到 super.hi(参数)
+    f.效果展示, 在主方法中调用show()
+4.通过this引用成员方法
+    a.准备一个函数式接口
+    c.准备一个类, 准备一个普通成员方法 buyHouse
+    d.类中要有一个 marry 方法, 用于接收 函数式接口 作为方法参数
+    e.在类中再次准备一个方法, show(), 用于调用 marry
+        可以传递Lambda表达式
+        需要在Lambda表达式中 调用 自己的 buyHouse 方法
+        就会用到 this.buyHouse(参数)
+    f.效果展示, 在主方法中调用show()
+5.类的构造器引用
+    Lambda表达式中使用了类的构造器
+6.数组的构造器引用
+    Lambda表达式中创建了一个数组
+
+RandomAccessFile - 可读可写, 基于文件指针的操作
+    文件指针停留在哪里, 就可以操作文件的哪个位置
+    也可以手动指定文件指针的位置
+    指针位置的操作:
+        void skipBytes(跳过字节个数)
+        long getFilePointer() - 得到当前指针位置
+        void seek(long) - 指针定位到指定的位置
+    读写:
+        readInt/readDouble...
+        writeInt/writeDouble...
+
+JavaSE:
+  变量: 数据类型 - (2种)
+       基本数据类型 - byte\short\int\long\float\double
+                    boolean\char
+  运算符: + - ++ += && || & | ^ >> << >>> ?: !
+         ==(double不能使用)
+  逻辑控制: if..else..  switch(byte\short\char\int\String)-case
+          for forEach while do-while
+          break  continue
+  方法: 修饰词 返回值类型 方法名(参数列表[参数类型 参数名]) {方法体}
+       方法的重载
+  数组: 数据结构, 容器
+       初始化, 初始值 [基本数据类型的数组 和 引用类型数组]
+  类: 构造方法, 代码块, 静态代码块, 成员方法, 静态方法, 成员变量...
+  对象: new来实例化, 构造方法初始化
+  访问权限: public protected (default) private
+  this
+  继承: extends
+  super
+  方法重写: 方法名, 参数列表, 返回值, 权限, 异常
+  多态: Animal a = new Dog()
+       编译看左边, 运行看右边
+  类型转换: instanceof
+  abstract static final
+  接口 interface: 字段[静态常量], 抽象方法, 默认方法, 私有的方法, 静态的方法
+                 implements 实现接口
+  内部类: 匿名内部类 成员内部类 静态内部类...
+  Object: 11个
+          wait*3 notify() notifyAll()
+          toString() hashCode() equals()
+          getClass() finalize() clone()
+  String: 不可变的字符序列
+  Math: 静态方法 ceil() floor() round() abs() sqrt()...
+  包装类: int a = 10;
+         Integer i = a; 自动装箱 Integer.valueOf(a)
+         a = i; 自动拆箱 i.intValue()
+         Integer 的常量池返回 -128 ~ 127
+  Date: long Calendar
+       long: 计时
+       Date: 显示 SimpleDateFormat
+       Calendar: 计算   add() set() get()
+  Collection:
+      List: ArrayList LinkedList Vector
+      Set: HashSet TreeSet
+      Queue: Deque(I) 栈(push pop)
+  Map: key - value
+     api: put get
+     HashMap TreeMap Hashtable LinkedHashMap...
+  sort(): Comparator-比较器, Comparable-可比较的
+  线程: Thread
+    1.继承Thread
+    2.实现Runnable - run. Callable - call
+    3.线程池使用线程 ExecutorService  Executors(工厂类)
+    线程的状态:
+        start yield sleep wait join notify notifyAll wait(long)
+    线程的同步:
+        synchronized Lock
+    线程的通信: wait  notify
+  IO:
+    字节流 - 高级的缓冲流
+    字符流 - 高级的缓冲流
+    File - 路径(相对路径, 绝对路径)
+  异常: 运行时异常RuntimeException
+       已检查异常Exception
+       Exception + Error -> Throwable
+       try-catch-finally  throws
+       throw 抛出 异常对象
+  JDK8: Lambda表达式 函数式接口 Stream 方法引用
+
+  Socket编程: 基于 TCP/IP协议 的网络编程
+      自学 TCP/IP 协议
+
+Exam -> Java Swing
+
+数据库: MySQL
+JDBC: Java 操作数据库
+Web前端: HTML CSS JS JQuery
+
+JavaEE: Servlet JSP Filter Listener aJax/JSON...
+框架: Spring SpringMVC MyBatis SpringBoot
+
+Maven Redis Nginx ....

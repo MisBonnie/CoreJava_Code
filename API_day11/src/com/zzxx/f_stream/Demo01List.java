@@ -25,7 +25,7 @@ public class Demo01List {
         // a.获得集合list对应的Stream
         Stream<String> stream = list.stream();
         stream.filter(s->s.length() == 3)
-                .forEach(s-> System.out.println(s));
+                .forEach(System.out::println);
 
         // 2. 第一个队伍筛选之后只要前3个人;存储到一个新集合中。
         /*List<String> list3 = new ArrayList<>();
